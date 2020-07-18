@@ -17,7 +17,7 @@
 	var linkyoutube = "";
 	var commentList = [];
 	var regexNumber = new RegExp('^\\d+$');
-	var commentIndex = 0, commentTime = 0;
+	var commentIndex = 0;
 	var addx0, addy0, addx1, addy1, cel, lx, ly, ld, lmax, lx2, ly2;
 	
 	linkyoutube = prompt('Please enter your youtube streaming url');
@@ -126,7 +126,6 @@
 		$('.purple-square-container').css('display', 'none');
 		commentList = [];
 		commentIndex = 0;
-		commentTime = 0;
 		win = false;
 		enabled = true;
 		addx0 = [1, 0, -1, -1, -1, 0];
@@ -244,7 +243,96 @@
 				{
 					commentList = [];
 					commentIndex = 0;
-					commentTime = 0;
+
+					setTimeout(function(){
+						var tmpList = [];
+						var tmpIndex = 0;
+						for (var i = 0; i < commentList.length; ++i) {
+							var tmp = commentList[i];
+							if (regexNumber.test(tmp))
+							{
+								tmpList[tmpIndex] = tmp;
+								tmpIndex++;
+							}
+						}
+						
+						if(tmpList.length == 0)
+						{
+							var x = Math.floor(Math.random() * 11) + 2;
+							var y = Math.floor(Math.random() * 11) + 2;
+							while ((x == cat.x && y == cat.y) || cel[y][x].stat == 2)
+							{
+								x = Math.floor(Math.random() * 11) + 2;
+								y = Math.floor(Math.random() * 11) + 2;
+							}
+							
+							var position = (11 * (y - 2) + (x - 2)) * 2;
+							var haha = (position / 2) + 1;
+							
+							reset1();
+							animateTextWinner("No comment, so the random position is " + haha);
+							animateBlobs();
+							
+							board.children[position].setAttributeNS(null, "fill", "#728501");
+							cel[y][x].stat = 2;
+						}
+						else
+						{
+							var modeMap = {};
+							var maxEl = tmpList[0], maxCount = 1;
+							for(var i = 0; i < tmpList.length; i++)
+							{
+								var el = tmpList[i];
+								if(modeMap[el] == null)
+									modeMap[el] = 1;
+								else
+									modeMap[el]++;  
+								if(modeMap[el] > maxCount)
+								{
+									maxEl = el;
+									maxCount = modeMap[el];
+								}
+							}
+							
+							var position = parseInt(maxEl) - 1;
+							var y = Math.floor(position / 11) + 2;
+							var x = position % 11;
+							x = x + 2;
+							
+							if ((x == cat.x && y == cat.y) || cel[y][x].stat == 2)
+							{
+								x = Math.floor(Math.random() * 11) + 2;
+								y = Math.floor(Math.random() * 11) + 2;
+								while ((x == cat.x && y == cat.y) || cel[y][x].stat == 2)
+								{
+									x = Math.floor(Math.random() * 11) + 2;
+									y = Math.floor(Math.random() * 11) + 2;
+								}
+								
+								var haha = (11 * (y - 2) + (x - 2)) + 1;
+								reset1();
+								animateTextWinner("Position viewer choose is wrong, so random position is " + haha);
+								animateBlobs();
+							}
+							else
+							{
+								var haha = (11 * (y - 2) + (x - 2)) + 1;
+								reset1();
+								animateTextWinner("Position viewer choose mostly is " + haha);
+								animateBlobs();
+							}
+							
+							var position = (11 * (y - 2) + (x - 2)) * 2;
+							board.children[position].setAttributeNS(null, "fill", "#728501");
+							cel[y][x].stat = 2;
+						}
+						
+						commentList = [];
+						commentIndex = 0;
+						enabled = false;
+						$('#game').css('opacity', '1');
+					}, 20000);
+					
 					enabled = true;
 					$('#game').css('opacity', '0.5');
 				}
@@ -317,98 +405,6 @@
 								commentList[commentIndex] = obj1.items[i].snippet.displayMessage;
 								commentIndex++;
 							}
-							commentTime++;
-							
-							if (commentTime >= 2)
-							{
-								var tmpList = [];
-								var tmpIndex = 0;
-								for (var i = 0; i < commentList.length; ++i) {
-									var tmp = commentList[i];
-									if (regexNumber.test(tmp))
-									{
-										tmpList[tmpIndex] = tmp;
-										tmpIndex++;
-									}
-								}
-								
-								if(tmpList.length == 0)
-								{
-									var x = Math.floor(Math.random() * 11) + 2;
-									var y = Math.floor(Math.random() * 11) + 2;
-									while ((x == cat.x && y == cat.y) || cel[y][x].stat == 2)
-									{
-										x = Math.floor(Math.random() * 11) + 2;
-										y = Math.floor(Math.random() * 11) + 2;
-									}
-									
-									var position = (11 * (y - 2) + (x - 2)) * 2;
-									var haha = (position / 2) + 1;
-									
-									reset1();
-									animateTextWinner("No comment, so the random position is " + haha);
-									animateBlobs();
-									
-									board.children[position].setAttributeNS(null, "fill", "#728501");
-									cel[y][x].stat = 2;
-								}
-								else
-								{
-									var modeMap = {};
-									var maxEl = tmpList[0], maxCount = 1;
-									for(var i = 0; i < tmpList.length; i++)
-									{
-										var el = tmpList[i];
-										if(modeMap[el] == null)
-											modeMap[el] = 1;
-										else
-											modeMap[el]++;  
-										if(modeMap[el] > maxCount)
-										{
-											maxEl = el;
-											maxCount = modeMap[el];
-										}
-									}
-									
-									var position = parseInt(maxEl) - 1;
-									var y = Math.floor(position / 11) + 2;
-									var x = position % 11;
-									x = x + 2;
-									
-									if ((x == cat.x && y == cat.y) || cel[y][x].stat == 2)
-									{
-										x = Math.floor(Math.random() * 11) + 2;
-										y = Math.floor(Math.random() * 11) + 2;
-										while ((x == cat.x && y == cat.y) || cel[y][x].stat == 2)
-										{
-											x = Math.floor(Math.random() * 11) + 2;
-											y = Math.floor(Math.random() * 11) + 2;
-										}
-										
-										var haha = (11 * (y - 2) + (x - 2)) + 1;
-										reset1();
-										animateTextWinner("Position viewer choose is wrong, so random position is " + haha);
-										animateBlobs();
-									}
-									else
-									{
-										var haha = (11 * (y - 2) + (x - 2)) + 1;
-										reset1();
-										animateTextWinner("Position viewer choose mostly is " + haha);
-										animateBlobs();
-									}
-									
-									var position = (11 * (y - 2) + (x - 2)) * 2;
-									board.children[position].setAttributeNS(null, "fill", "#728501");
-									cel[y][x].stat = 2;
-								}
-								
-								commentList = [];
-								commentIndex = 0;
-								commentTime = 0;
-								enabled = false;
-								$('#game').css('opacity', '1');
-							}
 						}
 					}
 				}
@@ -421,7 +417,7 @@
 					xmlHttp1.open("GET", "https://www.googleapis.com/youtube/v3/liveChat/messages?liveChatId=" + liveChatId + "&part=snippet&pageToken=" + pageToken + "&key=AIzaSyBDg7OedlIQY7bsmzFWp6RvqHvJPy0dgb0", true);
 				}
 				xmlHttp1.send(null);
-			}, 10000);
+			}, 8000);
 		}
     }
 	var res = linkyoutube.split("?v=");
