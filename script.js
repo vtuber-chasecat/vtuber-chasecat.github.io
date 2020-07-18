@@ -6,6 +6,7 @@
 	var board   = document.getElementById("board");
 	var game    = document.getElementById("game");
 	var resetB  = document.getElementById("reset");
+	var myTimer;
 	resetB.onclick = resetB.ontouchstart = function (e) {
 		e.preventDefault();
 		reset();
@@ -158,9 +159,9 @@
 			}
 		}
 		// place random plots (10 more than in the original)
-		for (var i = 0; i < 30; i++) {
-			var rx = Math.floor(Math.random() * 15);
-			var ry = Math.floor(Math.random() * 15);
+		for (var i = 0; i < 50; i++) {
+			var rx = Math.floor(Math.random() * 11) + 2;
+			var ry = Math.floor(Math.random() * 11) + 2;
 			if (rx != cat.x && ry != cat.y) {
 				if (cel[ry][rx].stat == 1) {
 					cel[ry][rx].stat = 2;
@@ -195,9 +196,10 @@
 		// display cat
 		game.setAttributeNS(null, "fill-opacity", 1);
 		cat.display(cat.px, cat.py, "f30");
+		$('#title').html("Viewer turn");
 		$('#game').css('opacity', '0.5');
 		
-		setTimeout(function(){
+		myTimer = setTimeout(function(){
 			var tmpList = [];
 			var tmpIndex = 0;
 			for (var i = 0; i < commentList.length; ++i) {
@@ -283,12 +285,14 @@
 			commentList = [];
 			commentIndex = 0;
 			enabled = false;
+			$('#title').html(chaName + " turn");
 			$('#game').css('opacity', '1');
 		}, 20000);
 	}
 
 	// reset
 	function reset () {
+		clearTimeout(myTimer);
 		win = false;
 		cat.display(0, 0, "");
 		var alpha = 100;
@@ -333,7 +337,7 @@
 					commentList = [];
 					commentIndex = 0;
 
-					setTimeout(function(){
+					myTimer = setTimeout(function(){
 						var tmpList = [];
 						var tmpIndex = 0;
 						for (var i = 0; i < commentList.length; ++i) {
@@ -419,10 +423,12 @@
 						commentList = [];
 						commentIndex = 0;
 						enabled = false;
+						$('#title').html(chaName + " turn");
 						$('#game').css('opacity', '1');
 					}, 20000);
 					
 					enabled = true;
+					$('#title').html("Viewer turn");
 					$('#game').css('opacity', '0.5');
 				}
 			}, 6 * 64);
