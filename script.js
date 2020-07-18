@@ -20,10 +20,10 @@
 	var commentIndex = 0, commentTime = 0;
 	var addx0, addy0, addx1, addy1, cel, lx, ly, ld, lmax, lx2, ly2;
 	
-	linkyoutube = prompt('Please enter your name');
+	linkyoutube = prompt('Please enter your youtube streaming url');
 	while (!linkyoutube)
 	{
-		linkyoutube = prompt('Please enter your name');
+		linkyoutube = prompt('Please enter your youtube streaming url');
 	}
 
 	// cell constructor
@@ -75,7 +75,7 @@
 		use.setAttributeNS(null, "class", "cell");
 		use.setAttributeNS(xlinkns, "xlink:href", "#r0");
 		use.setAttributeNS(null, "transform", "translate(" + x + "," + y + ")");
-		use.setAttributeNS(null, "fill", this.stat == 2 ? "#728501" : "#CCFF00");
+		use.setAttributeNS(null, "fill", this.win == 1 ? "#B20000" : this.stat == 2 ? "#728501" : "#CCFF00");
 		use.onclick = function (e) {
 			e.preventDefault();
 			click(this.parentElement, this.id, this.cx, this.cy);
@@ -403,6 +403,9 @@
 									cel[y][x].stat = 2;
 								}
 								
+								commentList = [];
+								commentIndex = 0;
+								commentTime = 0;
 								enabled = false;
 								$('#game').css('opacity', '1');
 							}
