@@ -196,6 +196,95 @@
 		game.setAttributeNS(null, "fill-opacity", 1);
 		cat.display(cat.px, cat.py, "f30");
 		$('#game').css('opacity', '0.5');
+		
+		setTimeout(function(){
+			var tmpList = [];
+			var tmpIndex = 0;
+			for (var i = 0; i < commentList.length; ++i) {
+				var tmp = commentList[i];
+				if (regexNumber.test(tmp))
+				{
+					tmpList[tmpIndex] = tmp;
+					tmpIndex++;
+				}
+			}
+			
+			if(tmpList.length == 0)
+			{
+				var x = Math.floor(Math.random() * 11) + 2;
+				var y = Math.floor(Math.random() * 11) + 2;
+				while ((x == cat.x && y == cat.y) || cel[y][x].stat == 2)
+				{
+					x = Math.floor(Math.random() * 11) + 2;
+					y = Math.floor(Math.random() * 11) + 2;
+				}
+				
+				var position = (11 * (y - 2) + (x - 2)) * 2;
+				var haha = (position / 2) + 1;
+				
+				reset1();
+				animateTextWinner("No comment, so the random position is " + haha);
+				animateBlobs();
+				
+				board.children[position].setAttributeNS(null, "fill", "#728501");
+				cel[y][x].stat = 2;
+			}
+			else
+			{
+				var modeMap = {};
+				var maxEl = tmpList[0], maxCount = 1;
+				for(var i = 0; i < tmpList.length; i++)
+				{
+					var el = tmpList[i];
+					if(modeMap[el] == null)
+						modeMap[el] = 1;
+					else
+						modeMap[el]++;  
+					if(modeMap[el] > maxCount)
+					{
+						maxEl = el;
+						maxCount = modeMap[el];
+					}
+				}
+				
+				var position = parseInt(maxEl) - 1;
+				var y = Math.floor(position / 11) + 2;
+				var x = position % 11;
+				x = x + 2;
+				
+				if ((x == cat.x && y == cat.y) || cel[y][x].stat == 2)
+				{
+					x = Math.floor(Math.random() * 11) + 2;
+					y = Math.floor(Math.random() * 11) + 2;
+					while ((x == cat.x && y == cat.y) || cel[y][x].stat == 2)
+					{
+						x = Math.floor(Math.random() * 11) + 2;
+						y = Math.floor(Math.random() * 11) + 2;
+					}
+					
+					var haha = (11 * (y - 2) + (x - 2)) + 1;
+					reset1();
+					animateTextWinner("Position viewer choose is wrong, so random position is " + haha);
+					animateBlobs();
+				}
+				else
+				{
+					var haha = (11 * (y - 2) + (x - 2)) + 1;
+					reset1();
+					animateTextWinner("Position viewer choose mostly is " + haha);
+					animateBlobs();
+				}
+				
+				var position = (11 * (y - 2) + (x - 2)) * 2;
+				board.children[position].setAttributeNS(null, "fill", "#728501");
+				cel[y][x].stat = 2;
+			}
+			
+			commentList = [];
+			commentIndex = 0;
+			enabled = false;
+			$('#game').css('opacity', '1');
+		}, 20000);
 	}
 
 	// reset
