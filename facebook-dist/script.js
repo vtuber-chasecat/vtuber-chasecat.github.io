@@ -481,7 +481,7 @@
 		}
 	}
 
-	var source = new EventSource("https://streaming-graph.facebook.com/" + linkyoutube + "/live_comments?access_token=EAAJiVAaQgNsBAI6CGBLL6FtQcaD5E23hYojsyHA3eNvjdO66szOoxkZAviF7xZA0n4zMhL1khvQvoIQVS5kEJeg6leMuwXWipv1YBcwpxl82GInbk2tcvzrbEnlqraZCgor2WzSz1KFZALXUamO0aGxUBP0mShIibDKn5xDrerB3rVri2T3d3h7Ihd4cVTZBYI2v1ykBoAytzwvDUeipM7R7UOnhyhmAlZAF3RLxnNpQZDZD&comment_rate=ten_per_second&fields=from{name,id},message");
+	var source = new EventSource("https://streaming-graph.facebook.com/" + linkyoutube + "/live_comments?access_token=EAACZBrePLLZBABAJ8dW42bH7jZAk5HvpurXyWZCXexH6n8gjOMkJKYV5nA7DsyqzzAOtZA0Q5JKGjuOBO5UWSSlBYfcIr17EZApEFq4NT7vZAbAnmSpBfCdws4DvxOB9P7sxzfKP6LTMJVa0ZAadTDo0Nb1SAcu9P0oGBEy1Wu03E4QnRPCBE7xNtZA2ZBQFGswZC0ZD&comment_rate=ten_per_second&fields=from{name,id},message");
 	source.onmessage = function(event) {
 		if (event != null && !win && enabled)
 		{
