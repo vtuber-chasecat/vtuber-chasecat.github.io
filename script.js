@@ -6,7 +6,7 @@
   var board   = document.getElementById("board");
   var game    = document.getElementById("game");
   var resetB  = document.getElementById("reset");
-  var apiKey  = "AIzaSyBDg7OedlIQY7bsmzFWp6RvqHvJPy0dgb0";
+  var apiKey  = "";
   var myTimer;
   resetB.onclick = resetB.ontouchstart = function (e) {
     e.preventDefault();
@@ -26,6 +26,12 @@
   while (!linkyoutube)
   {
     linkyoutube = prompt('Please enter your youtube streaming url');
+  }
+  
+  apiKey = prompt('Please enter your api key');
+  while (!apiKey)
+  {
+    apiKey = prompt('Please enter your api key');
   }
 
   // cell constructor
