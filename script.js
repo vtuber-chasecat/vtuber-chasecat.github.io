@@ -432,7 +432,7 @@
             enabled = false;
             $('#title').html(chaName + " turn");
             $('#game').css('opacity', '1');
-          }, 20000);
+          }, 17000);
           
           enabled = true;
           $('#title').html("Viewer turn");
@@ -519,7 +519,7 @@
           xmlHttp1.open("GET", "https://www.googleapis.com/youtube/v3/liveChat/messages?liveChatId=" + liveChatId + "&part=snippet&pageToken=" + pageToken + "&key=" + apiKey, true);
         }
         xmlHttp1.send(null);
-      }, 8000);
+      }, 5000);
     }
     }
   var res = linkyoutube.split("?v=");
